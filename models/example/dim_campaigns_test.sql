@@ -4,11 +4,9 @@
     This will override configurations stated in dbt_project.yml
     Try changing "table" to "view" below
 */
-
-
 {{ config(materialized='incremental', unique_key='campaign_key') }}
 select  
-      {{ dbt_utils.surrogate_key('c.campaign_id') }}  as campaign_key,
+     {{ dbt_utils.surrogate_key('c.campaign_id') }}  as campaign_key,
      11 as vendor_key, 
      c.campaign_id as campaign_id,
      c.advertiser_id as advertiser_id, 
@@ -23,10 +21,9 @@ select
      c.opt_status as status,
      c.create_time as source_created_at,
      c.updated_at as source_updated_at,
-      current_timestamp as dwh_created_at,
-     
+     current_timestamp as dwh_created_at,     
      current_timestamp as dwh_updated_at
-       from  tiktok_ads.campaign_history c 
+  from  tiktok_ads.campaign_history c 
 
 {% if is_incremental() %}
   -- this filter will only be applied on an incremental run

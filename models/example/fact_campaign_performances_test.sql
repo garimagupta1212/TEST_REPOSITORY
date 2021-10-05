@@ -1,10 +1,10 @@
  
-{{ config(materialized='incremental', unique_key='id') }}
+{{ config(materialized='incremental') }}
 
 select  
 
-
-    as id,
+0 as id,
+--{{ dbt_utils.surrogate_key('c.campaign_id') }}  as campaign_key,
 
    cast(replace(date(ar.stat_time_day), '-', '') as bigint) as date_key, 
 
@@ -38,8 +38,10 @@ select
 
 	 0 as return_on_advertising_spend,
 
-	 current_timestamp as dwh_created_at,
-
+ 
+    current_timestamp as dwh_created_at,
+ 
+	 
 	 current_timestamp as dwh_updated_at
 	 
   
